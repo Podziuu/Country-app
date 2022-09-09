@@ -1,7 +1,14 @@
+import Main from "./Pages/Main";
+import Detail from "./Pages/Detail";
+import { Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <div>
-
+    <div className="font-body">
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/:id" element={<Detail />} />
+      </Routes>
     </div>
   );
 }
