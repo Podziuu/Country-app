@@ -12,7 +12,7 @@ const Countries = (props) => {
   }
 
   return (
-    <section>
+    <section className="mt-4 flex flex-col items-center py-6">
       {props.data.map((country, index) => {
         return <Country key={index} data={country} />;
       })}

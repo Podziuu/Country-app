@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="font-body">
+    <div className="font-body box-border">
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/:id" element={<Detail />} />

@@ -5,7 +5,7 @@ const Navbar = () => {
     const [isDarkMode, setIsDarkMode] = useState(true)
 
   return (
-    <nav className="flex justify-between px-4 bg-dark-primary py-10 text-white">
+    <nav className="flex justify-between px-6 bg-dark-primary py-10 text-white">
       <h1 className="font-semibold">Where in the world?</h1>
       <div className="flex items-center cursor-pointer">
         <HiMoon className="mr-2" />
@@ -16,3 +16,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+// flex justify-between px-8 bg-dark-primary py-10 text-white

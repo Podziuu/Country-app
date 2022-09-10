@@ -42,14 +42,14 @@ const Main = () => {
   };
 
   return (
-    <div className="bg-dark-secondary w-screen min-h-[100vh]">
+    <div className="bg-dark-secondary w-full min-h-screen">
       <Navbar />
       <div className="flex bg-dark-primary mt-8 mx-4 p-4 rounded-lg">
         <span>
           <HiSearch color="white" size={24} />
         </span>
         <input
-          className="bg-dark-primary outline-none text-white ml-6"
+          className="bg-dark-primary outline-none text-white ml-6 w-full"
           placeholder="Search for a country..."
           onChange={changeHandler}
         />
@@ -63,11 +63,11 @@ const Main = () => {
       </div>
       {show && (
         <ul className="bg-dark-primary w-[250px] ml-4 mt-2 rounded-lg text-white p-4 pl-6 leading-8">
-          <li onClick={regionHandler}>Africa</li>
-          <li onClick={regionHandler}>America</li>
-          <li onClick={regionHandler}>Asia</li>
-          <li onClick={regionHandler}>Europe</li>
-          <li onClick={regionHandler}>Oceania</li>
+          <li className="cursor-pointer" onClick={regionHandler}>Africa</li>
+          <li className="cursor-pointer" onClick={regionHandler}>America</li>
+          <li className="cursor-pointer" onClick={regionHandler}>Asia</li>
+          <li className="cursor-pointer" onClick={regionHandler}>Europe</li>
+          <li className="cursor-pointer" onClick={regionHandler}>Oceania</li>
         </ul>
       )}
       <Countries data={countries} />

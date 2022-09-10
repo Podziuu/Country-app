@@ -3,7 +3,7 @@ import millify from 'millify'
 
 const Country = (props) => {
   return (
-    <div className="w-3/4 mx-auto py-8 rounded-lg">
+    <div className="w-[300px] my-8 rounded-lg">
       <img className="rounded-t-lg" src={props.data.flags.png} />
       <div className="text-white bg-dark-primary rounded-b-lg p-6">
         <h5 className="font-bold text-lg">{props.data.name.common}</h5>
