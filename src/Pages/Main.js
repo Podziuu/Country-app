@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../Components/Navbar";
 import Countries from "../Components/Countries";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import { HiSearch } from "react-icons/hi";
 import { RiArrowDropDownLine } from "react-icons/ri";
@@ -10,6 +11,9 @@ const Main = () => {
   const [show, setShow] = useState(false);
   const [countries, setCountries] = useState([]);
   const [allCountries, setAllCountries] = useState([]);
+  const [isCountry, setIsCountry] = useState(true);
+
+  const isDarkMode = useSelector((state) => state.darkmode.darkMode)
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
@@ -35,42 +39,72 @@ const Main = () => {
   };
 
   const changeHandler = (e) => {
+    const enteredCountry = capitalizeFirstLetter(e.target.value);
     const filteredCountries = allCountries.filter((country) =>
-      country.name.common.startsWith(e.target.value)
+      country.name.common.startsWith(enteredCountry)
     );
-    setCountries(filteredCountries);
+    if (filteredCountries.length === 0) {
+      setIsCountry(false);
+    } else {
+      setIsCountry(true);
+      setCountries(filteredCountries);
+    }
   };
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  const classes = isDarkMode ? 'white' : 'black'
+
   return (
-    <div className="bg-dark-secondary w-full min-h-screen">
+    <div
+      className={`dark:bg-dark-secondary bg-light-primary text-light-text dark:text-white w-full min-h-screen`}
+    >
       <Navbar />
-      <div className="flex bg-dark-primary mt-8 mx-4 p-4 rounded-lg">
-        <span>
-          <HiSearch color="white" size={24} />
-        </span>
-        <input
-          className="bg-dark-primary outline-none text-white ml-6 w-full"
-          placeholder="Search for a country..."
-          onChange={changeHandler}
-        />
+      <div className="lg:flex lg:justify-between 2xl:px-36 sm:px-12">
+        <div
+          className={`flex dark:bg-dark-primary bg-white mt-8 mx-4 p-4 rounded-lg lg:w-1/3 h-fit drop-shadow-lg`}
+        >
+          <span>
+            <HiSearch className="dark:text-white text-light-secondary" size={24} />
+          </span>
+          <input
+            className="dark:bg-dark-primary outline-none dark:text-white bg-white ml-6 w-full h-fit"
+            placeholder="Search for a country..."
+            onChange={changeHandler}
+          />
+        </div>
+        <div>
+          <div
+            onClick={clickHandler}
+            className="flex items-center w-[250px] p-4 pl-6 dark:bg-dark-primary dark:text-white bg-white text-light-text shadow-lg rounded-lg ml-4 mt-6 cursor-pointer lg:mr-4"
+          >
+            <span className="mr-12">Filter by Region</span>
+            <RiArrowDropDownLine size={36} />
+          </div>
+          {show && (
+            <ul className="dark:bg-dark-primary bg-white w-[250px] ml-4 mt-2 rounded-lg dark:text-white text-light-text p-4 pl-6 leading-8">
+              <li className="cursor-pointer" onClick={regionHandler}>
+                Africa
+              </li>
+              <li className="cursor-pointer" onClick={regionHandler}>
+                America
+              </li>
+              <li className="cursor-pointer" onClick={regionHandler}>
+                Asia
+              </li>
+              <li className="cursor-pointer" onClick={regionHandler}>
+                Europe
+              </li>
+              <li className="cursor-pointer" onClick={regionHandler}>
+                Oceania
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
-      <div
-        onClick={clickHandler}
-        className="flex items-center w-[250px] p-4 pl-6 bg-dark-primary text-white rounded-lg ml-4 mt-6 cursor-pointer"
-      >
-        <span className="mr-12">Filter by Region</span>
-        <RiArrowDropDownLine size={36} />
-      </div>
-      {show && (
-        <ul className="bg-dark-primary w-[250px] ml-4 mt-2 rounded-lg text-white p-4 pl-6 leading-8">
-          <li className="cursor-pointer" onClick={regionHandler}>Africa</li>
-          <li className="cursor-pointer" onClick={regionHandler}>America</li>
-          <li className="cursor-pointer" onClick={regionHandler}>Asia</li>
-          <li className="cursor-pointer" onClick={regionHandler}>Europe</li>
-          <li className="cursor-pointer" onClick={regionHandler}>Oceania</li>
-        </ul>
-      )}
-      <Countries data={countries} />
+      <Countries data={countries} isCountry={isCountry} />
     </div>
   );
 };
