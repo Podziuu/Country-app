@@ -2,6 +2,7 @@ import React from "react";
 import { HiMoon, HiOutlineMoon } from "react-icons/hi";
 import { useDispatch, useSelector } from "react-redux";
 import { darkmodeActions } from "../store/darkmode";
+import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Navbar = (props) => {
 
   return (
     <nav className={`flex justify-between px-6 ${classes} py-10 2xl:px-36 sm:px-12 drop-shadow-lg`}>
-      <h1 className="font-semibold">Where in the world?</h1>
+      <Link to="/" ><h1 className="font-semibold">Where in the world?</h1></Link>
       <div onClick={clickHandler} className="flex items-center cursor-pointer">
         {isDarkMode && <HiMoon className="mr-2" />}
         {!isDarkMode && <HiOutlineMoon className="mr-2" />}

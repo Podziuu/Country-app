@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react";
-import Navbar from "../Components/Navbar";
 import Countries from "../Components/Countries";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { countriesActions } from "../store/countries";
 
 import { HiSearch } from "react-icons/hi";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import { useGetCountriesByRegionQuery, useGetAllCountriesQuery } from "../api";
 
 const Main = () => {
   const [show, setShow] = useState(false);
   const [countries, setCountries] = useState([]);
   const [allCountries, setAllCountries] = useState([]);
   const [isCountry, setIsCountry] = useState(true);
+  const dispatch = useDispatch()
+  const {data} = useGetCountriesByRegionQuery('Europe', {skip: true})
+  const {data: countriesq, isFetching, error} = useGetAllCountriesQuery
 
-  const isDarkMode = useSelector((state) => state.darkmode.darkMode)
+  console.log(data)
+
+  const count = useSelector((state) => state.countries.countries)
+
+  console.log(count)
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
       setCountries(response.data);
       setAllCountries(response.data);
+      dispatch(countriesActions.add(response.data))
     });
-  }, []);
+  }, [dispatch]);
 
   const clickHandler = (e) => {
     setShow((prevState) => !prevState);
@@ -55,16 +64,13 @@ const Main = () => {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const classes = isDarkMode ? 'white' : 'black'
-
   return (
     <div
-      className={`dark:bg-dark-secondary bg-light-primary text-light-text dark:text-white w-full min-h-screen`}
+      className={`dark:bg-dark-secondary bg-light-primary text-light-text dark:text-white w-full min-h-screen pt-8`}
     >
-      <Navbar />
       <div className="lg:flex lg:justify-between 2xl:px-36 sm:px-12">
         <div
-          className={`flex dark:bg-dark-primary bg-white mt-8 mx-4 p-4 rounded-lg lg:w-1/3 h-fit drop-shadow-lg`}
+          className={`flex dark:bg-dark-primary bg-white mx-4 p-4 rounded-lg lg:w-1/3 h-fit drop-shadow-lg`}
         >
           <span>
             <HiSearch className="dark:text-white text-light-secondary" size={24} />
