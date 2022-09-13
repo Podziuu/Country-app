@@ -13,23 +13,23 @@ const Main = () => {
   const [countries, setCountries] = useState([]);
   const [allCountries, setAllCountries] = useState([]);
   const [isCountry, setIsCountry] = useState(true);
-  const dispatch = useDispatch()
-  const {data} = useGetCountriesByRegionQuery('Europe', {skip: true})
-  const {data: countriesq, isFetching, error} = useGetAllCountriesQuery
+  // const dispatch = useDispatch()
+  // const {data} = useGetCountriesByRegionQuery('Europe', {skip: true})
+  // const {data: countriesq, isFetching, error} = useGetAllCountriesQuery
 
-  console.log(data)
+  // console.log(data)
 
-  const count = useSelector((state) => state.countries.countries)
+  // const count = useSelector((state) => state.countries.countries)
 
-  console.log(count)
+  // console.log(count)
 
   useEffect(() => {
     axios.get("https://restcountries.com/v3.1/all").then((response) => {
       setCountries(response.data);
       setAllCountries(response.data);
-      dispatch(countriesActions.add(response.data))
+      // dispatch(countriesActions.add(response.data))
     });
-  }, [dispatch]);
+  }, []);
 
   const clickHandler = (e) => {
     setShow((prevState) => !prevState);
